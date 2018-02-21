@@ -35,6 +35,9 @@ describe Converter do
       assert_equal "ninety eight and 0/100 dollar(s)", @c.amount_to_english(98)
       assert_equal "seventy four and 0/100 dollar(s)", @c.amount_to_english(74)
       assert_equal "twenty three and 0/100 dollar(s)", @c.amount_to_english(23)
+      assert_equal "fifty and 0/100 dollar(s)", @c.amount_to_english(50)
+      assert_equal "ninety nine and 0/100 dollar(s)", @c.amount_to_english(99)
+      assert_equal "twenty and 0/100 dollar(s)", @c.amount_to_english(20)
     end
 
     def test_under_one_hundred_decimals
@@ -47,6 +50,13 @@ describe Converter do
     def test_under_one_hundred_decimal_overflow
       assert_equal "twenty three and 10/100 dollar(s)", @c.amount_to_english(23.1021321312)
       assert_equal "twenty three and 96/100 dollar(s)", @c.amount_to_english(23.955555555)
+    end
+  end
+
+  describe "stuff" do
+    def test_amount_under_nine_nine_nine
+      assert_equal "three hundred fifteen and 0/100 dollar(s)", @c.amount_to_english(315)
+      assert_equal "three hundred and 0/100 dollar(s)", @c.amount_to_english(300)
     end
   end
 end
