@@ -6,17 +6,23 @@ class Converter
   end
 
   def build_numbers(n)
-    n = n.to_s.split('.')[0].to_i
+    n = decimal_split(n)[0].to_i
     case
     when n < 20
       ints_to_twenty[n-1]
     when n < 100
       tens_block[(n / 10) - 2] + (n % 10 == 0 ? "" : " #{build_numbers(n % 10)}")
     when n < 1e3
-      "#{build_numbers(n / 100)} hundred" + (n % 100 == 0 ? "" : " #{build_numbers(n % 100)}")
+      recursive_builder(n, 100, "hundred")
+      # "#{build_numbers(n / 100)} hundred" + (n % 100 == 0 ? "" : " #{build_numbers(n % 100)}")
     when n < 1e6
-      "#{build_numbers(n / 1000)} thousand" + (n % 1000 == 0 ? "" : " #{build_numbers(n % 1000)}")
+      recursive_builder(n, 1000, "thousand")
+      # "#{build_numbers(n / 1000)} thousand" + (n % 1000 == 0 ? "" : " #{build_numbers(n % 1000)}")
     end
+  end
+
+  def recursive_builder(n, offset, place)
+    "#{build_numbers(n / offset)} #{place}" + (n % offset == 0 ? "" : " #{build_numbers(n % offset)}")
   end
 
   # def recursive_render(number_array, place, name, n)
@@ -25,7 +31,7 @@ class Converter
 
   private
     def cent_handler(n = 0)
-      cents = n.to_s.split(".")[-1]
+      cents = decimal_split(n)[-1]
       if cents.length > 2
         cents = cents[0..2]
         return "and #{cents[0..1]}/100 dollar(s)" if cents[0] == '0'
@@ -34,6 +40,10 @@ class Converter
       cents = "#{cents}0" if cents.to_s.length == 1
       cents = 0 if !cents?(n)
       "and #{cents}/100 dollar(s)"
+    end
+
+    def decimal_split(n)
+      n.to_s.split(".")
     end
 
     def cents?(n)
