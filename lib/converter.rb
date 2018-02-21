@@ -2,11 +2,12 @@
 # Two thousand five hundred twenty-three and 04/100 dollars
 class Converter
   def amount_to_english(n)
-    "#{build_numbers(n)} #{cent_handler(n)}"
+    negative = n.to_s.include?("-") ? "negative " : ""
+    negative + "#{build_numbers(n)} #{cent_handler(n)}"
   end
 
   def build_numbers(n)
-    n = decimal_split(n)[0].to_i
+    n = decimal_split(n)[0].delete('-').to_i
     case
     when n < 20
       ints_to_twenty[n-1]
