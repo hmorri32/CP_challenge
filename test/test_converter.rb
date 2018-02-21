@@ -28,6 +28,10 @@ describe Converter do
     def test_under_twenty_with_decimal_overflow
       assert_equal "one and 05/100 dollar(s)", @c.amount_to_english(1.0532432432)
     end
+
+    def test_negative_value
+      assert_equal "negative four and 0/100 dollar(s)", @c.amount_to_english(-4)
+    end
   end
 
   describe "amount > 19 && amount < 100" do
@@ -66,7 +70,6 @@ describe Converter do
       assert_equal "three thousand three hundred fifteen and 0/100 dollar(s)", @c.amount_to_english(3315)
       assert_equal "forty thousand three hundred fifteen and 0/100 dollar(s)", @c.amount_to_english(40315)
       assert_equal "forty thousand three hundred sixteen and 67/100 dollar(s)", @c.amount_to_english(40316.67)
-
     end
   end
 end
