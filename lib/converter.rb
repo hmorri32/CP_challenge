@@ -10,14 +10,14 @@ class Converter
     n = decimal_split(n)[0].delete('-').to_i
     case
     when n < 20
-      ints_to_twenty[n-1]
+      ints_to_twenty[n - 1]
     when n < 100
       tens_block[(n / 10) - 2] + (n % 10 == 0 ? "" : " #{build_numbers(n % 10)}")
     when n < 1e3
       recursive_builder(n, 100, "hundred")
       # "#{build_numbers(n / 100)} hundred" + (n % 100 == 0 ? "" : " #{build_numbers(n % 100)}")
     when n < 1e6
-      recursive_builder(n, 1000, "thousand")
+      recursive_builder(n, 1_000, "thousand")
       # "#{build_numbers(n / 1000)} thousand" + (n % 1000 == 0 ? "" : " #{build_numbers(n % 1000)}")
     end
   end
@@ -62,6 +62,6 @@ end
 
 if $PROGRAM_NAME == __FILE__
   c = Converter.new
+  # p c.amount_to_english(23.1021321312)
   require 'pry'; binding.pry
-  stuff = 'cool'
 end
