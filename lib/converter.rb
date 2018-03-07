@@ -62,6 +62,5 @@ end
 
 if $PROGRAM_NAME == __FILE__
   c = Converter.new
-  # p c.amount_to_english(23.1021321312)
-  require 'pry'; binding.pry
+  p c.amount_to_english(23.1021321312) # "twenty three and 10/100 dollar(s)"
 end
