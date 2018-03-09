@@ -19,6 +19,8 @@ class Converter
     when n < 1e6
       recursive_builder(n, 1_000, "thousand")
       # "#{build_numbers(n / 1000)} thousand" + (n % 1000 == 0 ? "" : " #{build_numbers(n % 1000)}")
+    when n < 1e9
+      recursive_builder(n, 1_000_000, "million")
     end
   end
 
