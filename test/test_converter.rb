@@ -65,11 +65,17 @@ describe Converter do
     end
   end
 
-  describe "amount > 9999 && amount < 10000" do
+  describe "amount > 9999 && amount < 100_000" do
     def test_amount_under_nine_nine_nine_nine
       assert_equal "three thousand three hundred fifteen and 0/100 dollar(s)", @c.amount_to_english(3315)
       assert_equal "forty thousand three hundred fifteen and 0/100 dollar(s)", @c.amount_to_english(40315)
       assert_equal "forty thousand three hundred sixteen and 67/100 dollar(s)", @c.amount_to_english(40316.67)
+    end
+  end
+
+  describe "amount < 1_000_000" do
+    def test_amount_under_mil
+      assert_equal "three million and 0/100 dollar(s)", @c.amount_to_english(3_000_000)
     end
   end
 end
